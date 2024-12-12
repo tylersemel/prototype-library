@@ -66,14 +66,21 @@ function createBookCard(title, author, pages, read) {
     booksSection.appendChild(cardArticle);
 }
 
+//gonna have a button that you click to show the form
+//it'll show up in the center and then the user fills in the details
+//separate button to add the book
 
 function start() {
     
     addBookToLibrary("The Hobbit", "Guy", 295, true);
 
-    addBookToLibrary("The Hobbit", "Guy", 295, true);
-
     addBookToLibrary("The Hobbit", "Guy", 295, false);
+    addBookToLibrary("The Hobbit", "Guy", 295, false);
+    addBookToLibrary("The Hobbit", "Guy", 295, false);
+    addBookToLibrary("The Hobbit", "Guy", 295, false);
+    addBookToLibrary("The Hobbit", "Guy", 295, false);
+
+    // addBookToLibrary("The Hobbit", "Gghgjhgkj hghghjkg jkghgjkhgg hkgjkhkjgghjjkgk ghjkgjkhhjkgkjhg khjgkjg jk g hjuy", 295, false);
 
     for (let book of myLibrary) {
         console.log(book.title);

@@ -70,13 +70,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content {
-    background-color: rgb(227, 227, 227);
+    background-color: rgb(217, 217, 217);
     grid-area: books;
     padding: 25px;
 }
 
 .books {
     margin-left: 10rem;
+    margin-right: 3rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 2rem;
@@ -84,11 +85,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .card {
     background-color: rgb(12, 85, 17);
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 26px;
+    overflow: hidden;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
-    box-shadow: 4px 5px 6px rgb(126, 126, 126);
+    border-left: 8px solid rgb(0, 42, 0);
+    box-shadow: 0px 5px 6px rgb(126, 126, 126), 5px -3px white, 6px -3px rgb(0, 0, 0),  10px -6px white, 15px -9px rgb(12, 85, 17);
 }
 
 .book-top {
@@ -106,15 +109,43 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .book-bottom {
-    margin-top: 2rem;
-    height: 10rem;
+    padding: 10px;
+    margin-top: 1rem;
+    /* height: 10rem; */
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
 }
 
+.book-bottom span {
+    padding: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
 .sidebar {
     background-color: rgb(227, 227, 227);
     grid-area: sidebar;
+    display: flex;
+    justify-content: center;
+}
+
+.add-book {
+    padding: 10px;
+}
+
+.add-book button {
+    margin-top: 5rem;
+    border: none;
+    padding: 1rem 3rem;
+    background-color: darkgreen;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    box-shadow: 3px 5px 6px rgb(126, 126, 126);
+}
+
+.book-form {
+    display: none;
 }
