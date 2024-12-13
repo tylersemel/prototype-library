@@ -92,8 +92,6 @@ closeAddDialogBtn.addEventListener('click', () => {
 addBookForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-
-
     const titleValue = addBookForm.querySelector('#title').value;
     const authorValue =addBookForm.querySelector('#author').value;
     const pagesValue =addBookForm.querySelector('#pages').value;
@@ -105,7 +103,9 @@ addBookForm.addEventListener('submit', (e) => {
         readValue = false;
     }
 
-    addBookToLibrary(titleValue.toString(), authorValue.toString(), pagesValue, readValue);
+    addBookToLibrary(titleValue.toString(), authorValue.toString(), pagesValue.toString(), readValue);
     createBookCard(myLibrary[myLibrary.length - 1]);
 
+    addBookForm.reset();
+    addDialog.close();
 });

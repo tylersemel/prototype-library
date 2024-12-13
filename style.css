@@ -214,7 +214,8 @@ dialog button {
     margin-bottom: 10px;
 }
 
-.add-book-form section p input[type="text"] {
+.add-book-form section p input[type="text"],
+.add-book-form section p input[type="number"] {
     width: 250px;
     height: initial;
     margin-left: 10px;
