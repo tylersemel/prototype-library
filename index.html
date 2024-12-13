@@ -25,34 +25,34 @@
     <dialog class="add-dialog">
         <div class="items-container">
             <button class="close" autofocus>X</button>
-            <form action="post" class="add-book-form">
+            <form action="" method="POST" class="add-book-form">
                 <h1>New Book Form</h1>
                 <section>
                     <p>
                         <label for="title">Title</label>
-                        <input type="text" id="title" name="title">
+                        <input type="text" id="title" name="title" required>
                     </p>
                     <p>
                         <label for="author">Author</label>
-                        <input type="text" id="author" name=author>
+                        <input type="text" id="author" name=author required>
                     </p>
                     <p>
                         <label for="pages">Pages</label>
-                        <input type="text" id="pages" name="pages">
+                        <input type="text" id="pages" name="pages" required>
                     </p>
-                    <fieldset>
-                        <legend>Have you read this book?</legend>
-                        <p>
-                            <input type="radio" name="read" id="has-read" value="true">
-                            <label for="has-read">Yes</label>
-                        </p>
-                        <p>
-                            <input type="radio" name="read" id="not-read" value="false">
-                            <label for="not-read">No</label>
-                        </p>
-                    </fieldset>
                 </section>
-                <section>
+                <fieldset>
+                    <legend>Have you read this book?</legend>
+                    <p>
+                        <input type="radio" name="read" id="has-read" value="true" required>
+                        <label for="has-read">Yes</label>
+                    </p>
+                    <p>
+                        <input type="radio" name="read" id="not-read" value="false" required>
+                        <label for="not-read">No</label>
+                    </p>
+                </fieldset>
+                <section class="submit-button">
                     <p>
                         <button type="submit">Add this book</button>
                     </p>

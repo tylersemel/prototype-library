@@ -2,7 +2,7 @@ const booksSection = document.querySelector('.books');
 const addDialog = document.querySelector('.add-dialog');
 const showAddDialogBtn = document.querySelector('.show-add-dialog')
 const closeAddDialogBtn = document.querySelector('.add-dialog button');
-
+const addBookForm = document.querySelector('.add-book-form');
 
 const myLibrary = [];
 
@@ -24,7 +24,7 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 }
 
-function createBookCard(title, author, pages, read) {
+function createBookCard(book) {
     let cardArticle = document.createElement('article');
     cardArticle.classList.add('card');
 
@@ -35,7 +35,7 @@ function createBookCard(title, author, pages, read) {
     let readDiv = document.createElement('div');
     readDiv.classList.add('read');
 
-    if (read) {
+    if (book.read) {
         readDiv.textContent = '✓';
     }
     else {
@@ -44,7 +44,7 @@ function createBookCard(title, author, pages, read) {
 
     let pagesDiv = document.createElement('div');
     pagesDiv.classList.add('pages');
-    pagesDiv.textContent = pages.toString() + ' pp.';
+    pagesDiv.textContent = book.pages.toString() + ' pp.';
 
     bookTopDiv.appendChild(readDiv);
     bookTopDiv.appendChild(pagesDiv);
@@ -54,10 +54,10 @@ function createBookCard(title, author, pages, read) {
     bookBottomHeader.classList.add('book-bottom');
 
     let titleH3 = document.createElement('h3');
-    titleH3.textContent = title;
+    titleH3.textContent = book.title;
 
     let authorSpan = document.createElement('span');
-    authorSpan.textContent = author;
+    authorSpan.textContent = book.author;
 
     bookBottomHeader.appendChild(titleH3);
     bookBottomHeader.appendChild(authorSpan);
@@ -74,20 +74,9 @@ function createBookCard(title, author, pages, read) {
 //it'll show up in the center and then the user fills in the details
 //separate button to add the book
 
-function start() {
-    
-    addBookToLibrary("The Hobbit", "Guy", 295, true);
-
-    addBookToLibrary("The Hobbit", "Guy", 295, false);
-    addBookToLibrary("The Hobbit", "Guy", 295, false);
-    addBookToLibrary("The Hobbit", "Guy", 295, false);
-    addBookToLibrary("The Hobbit", "Guy", 295, false);
-    addBookToLibrary("The Hobbit", "Guy", 295, false);
-
-    // addBookToLibrary("The Hobbit", "Gghgjhgkj hghghjkg jkghgjkhgg hkgjkhkjgghjjkgk ghjkgjkhhjkgkjhg khjgkjg jk g hjuy", 295, false);
+function populateBookCards() {
 
     for (let book of myLibrary) {
-        console.log(book.title);
         createBookCard(book.title, book.author, book.pages, book.read);
     }
 }
@@ -100,5 +89,23 @@ closeAddDialogBtn.addEventListener('click', () => {
     addDialog.close();
 });
 
+addBookForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-start();
+
+
+    const titleValue = addBookForm.querySelector('#title').value;
+    const authorValue =addBookForm.querySelector('#author').value;
+    const pagesValue =addBookForm.querySelector('#pages').value;
+    let readValue;
+    if (addBookForm.querySelector('#has-read').value) {
+        readValue = true;
+    }
+    else {
+        readValue = false;
+    }
+
+    addBookToLibrary(titleValue.toString(), authorValue.toString(), pagesValue, readValue);
+    createBookCard(myLibrary[myLibrary.length - 1]);
+
+});
