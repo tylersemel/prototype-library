@@ -17,14 +17,49 @@
             </section>
         </main>
         <div class="sidebar">
-            <div class="add-book">
+            <div class="show-add-dialog">
                 <button>Add Book</button>
             </div>
         </div>
     </div>
-    <div class="book-form">
-        hi
-    </div>
+    <dialog class="add-dialog">
+        <div class="items-container">
+            <button class="close" autofocus>X</button>
+            <form action="post" class="add-book-form">
+                <h1>New Book Form</h1>
+                <section>
+                    <p>
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title">
+                    </p>
+                    <p>
+                        <label for="author">Author</label>
+                        <input type="text" id="author" name=author>
+                    </p>
+                    <p>
+                        <label for="pages">Pages</label>
+                        <input type="text" id="pages" name="pages">
+                    </p>
+                    <fieldset>
+                        <legend>Have you read this book?</legend>
+                        <p>
+                            <input type="radio" name="read" id="has-read" value="true">
+                            <label for="has-read">Yes</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="read" id="not-read" value="false">
+                            <label for="not-read">No</label>
+                        </p>
+                    </fieldset>
+                </section>
+                <section>
+                    <p>
+                        <button type="submit">Add this book</button>
+                    </p>
+                </section>
+            </form>
+        </div>
+    </dialog>
 
 </body>
 </html>

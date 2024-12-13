@@ -131,11 +131,11 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
-.add-book {
+.show-add-dialog {
     padding: 10px;
 }
 
-.add-book button {
+.show-add-dialog button {
     margin-top: 5rem;
     border: none;
     padding: 1rem 3rem;
@@ -144,8 +144,54 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     font-size: 25px;
     box-shadow: 3px 5px 6px rgb(126, 126, 126);
+    cursor: pointer;
 }
 
-.book-form {
-    display: none;
+.show-add-dialog button:active {
+    translate: 0 3px;
+    box-shadow: none;
+}
+
+.close {
+    border: none;
+    /* padding: 10px 15px; */
+    height: 40px;
+    width: 40px;
+    background-color: darkgray;
+    color: white;
+    font-weight: bold;
+    border-radius: 100%;
+    cursor: pointer;   
+}
+
+dialog {
+    margin: auto;
+    margin-top: 8rem; 
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 400px;
+}
+
+dialog button {
+    margin-top: 5px;
+    margin-right: 5px;
+    align-self: end;
+}
+
+::backdrop {
+    background-image: linear-gradient(
+        90deg,
+        darkgreen,
+        rgb(11, 111, 83),
+        green
+    );
+    opacity: 0.75;
+}
+
+.add-book-form {
+    padding: 10px;
 }

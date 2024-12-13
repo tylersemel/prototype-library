@@ -1,4 +1,8 @@
 const booksSection = document.querySelector('.books');
+const addDialog = document.querySelector('.add-dialog');
+const showAddDialogBtn = document.querySelector('.show-add-dialog')
+const closeAddDialogBtn = document.querySelector('.add-dialog button');
+
 
 const myLibrary = [];
 
@@ -87,5 +91,14 @@ function start() {
         createBookCard(book.title, book.author, book.pages, book.read);
     }
 }
+
+showAddDialogBtn.addEventListener('click', () => {
+    addDialog.showModal();
+});
+
+closeAddDialogBtn.addEventListener('click', () => {
+    addDialog.close();
+});
+
 
 start();
