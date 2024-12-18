@@ -97,16 +97,11 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0px 5px 6px rgb(126, 126, 126), 5px -3px white, 6px -3px rgb(0, 0, 0),  10px -6px white, 15px -9px rgb(12, 85, 17);
 }
 
-.remove {
-    margin-right: 10px;
-    align-self: end;
-}
-
-.remove button {
-    width: 30px;
-    height: 30px;
+.remove button, .read button {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     font-weight: bold;
     cursor: pointer;
@@ -115,10 +110,13 @@ h1, h2, h3, h4, h5, h6 {
 .book-info {
     padding:  0rem 2rem 2rem;
     font-size: 26px;
+    align-self: center;
+    text-align: center;
 }
 
-/* .book-top {
+.book-buttons {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     padding: 1rem;
 }
@@ -128,23 +126,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pages {
-    font-size: 22px;
+    font-size: 20px;
 }
-
-.book-bottom {
-    padding: 10px;
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-}
-
-.book-bottom span {
-    padding: 10px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-} */
 
 .sidebar {
     background-color: rgb(227, 227, 227);
