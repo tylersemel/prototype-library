@@ -1,17 +1,17 @@
 const booksSection = document.querySelector('.books');
 const addDialog = document.querySelector('.add-dialog');
-const showAddDialogBtn = document.querySelector('.show-add-dialog')
+const showAddDialogBtn = document.querySelector('.show-add-dialog button')
 const closeAddDialogBtn = document.querySelector('.add-dialog button');
 const addBookForm = document.querySelector('.add-book-form');
+const removeBookBtns = [];
 
 const myLibrary = [];
 
-function Book(title, author, pages, read, index) {
+function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.index = index;
     this.info = function() {
         if (!this.read) {
             return `${title} by ${author}, ${pages} pages, not read yet.`;
@@ -20,8 +20,8 @@ function Book(title, author, pages, read, index) {
     };
 }
 
-function addBookToLibrary(title, author, pages, read, index) {
-    let newBook = new Book(title, author, pages, read, index);
+function addBookToLibrary(title, author, pages, read) {
+    let newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
 }
 
@@ -74,11 +74,13 @@ function addBookToLibrary(title, author, pages, read, index) {
 function createBookCard(book) {
     let cardArticle = document.createElement('article');
     cardArticle.classList.add('card');
+    cardArticle.setAttribute('data-index', myLibrary.indexOf(book));
 
     let removeDiv = document.createElement('div');
     removeDiv.classList.add('remove');
     let removeBtn = document.createElement('button');
     removeBtn.textContent = 'X';
+    removeBookBtns.push(removeBtn);
     removeDiv.appendChild(removeBtn);
 
     //create top of book in article
@@ -93,14 +95,12 @@ function createBookCard(book) {
 }
 
 function populateBookCards() {
-    addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
-    addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
-    addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
-    addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, false));
-    addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
+    addBookToLibrary("The 0", "J.R.R. Tolkien", 295, true, myLibrary.length);
+    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, true, myLibrary.length);
+    addBookToLibrary("The 2", "J.R.R. Tolkien", 295, true, myLibrary.length);
 
     for (let book of myLibrary) {
-        createBookCard(book.title, book.author, book.pages, book.read);
+        createBookCard(book);
     }
 
     console.log(myLibrary[3]);
@@ -128,11 +128,42 @@ addBookForm.addEventListener('submit', (e) => {
         readValue = false;
     }
 
-    addBookToLibrary(titleValue.toString(), authorValue.toString(), pagesValue.toString(), readValue, myLibrary.length);
+    addBookToLibrary(titleValue, authorValue, pagesValue, readValue, myLibrary.length);
     createBookCard(myLibrary[myLibrary.length - 1]);
 
     addBookForm.reset();
     addDialog.close();
 });
 
+booksSection.addEventListener('click', (e) => {
+    if (e.target.parentNode.classList.value !== 'remove') {
+        return;
+    }
+
+    if (e.target.parentNode.parentNode.classList.value !== 'card') {
+        return;
+    }
+
+    const bookChild = e.target.parentNode.parentNode;
+
+    removeBook(bookChild);
+});
+
+
+
+function removeBook(bookChild) {
+    //remove from the library array
+    myLibrary.splice(bookChild.getAttribute('data-index'), 1);
+
+    //remove from the DOM
+    booksSection.removeChild(bookChild);   
+
+    //reset data-index to match index of myLibrary
+    let idx = 0;
+    for (const child of booksSection.children) {
+        child.setAttribute('data-index', idx)
+        idx++;
+    }
+
+}
 populateBookCards();
