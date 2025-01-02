@@ -97,6 +97,59 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0px 5px 6px rgb(126, 126, 126), 5px -3px white, 6px -3px rgb(0, 0, 0),  10px -6px white, 15px -9px rgb(12, 85, 17);
 }
 
+.read-container #read {
+    position: relative;
+    display: inline-block;
+    appearance: none;
+    width: 50px;
+    height: 20px;
+    background-color: gray;
+    border-radius: 30px;
+}
+
+.read-container {
+    position: relative;
+}
+
+.read-container label {
+    text-align: center;
+}
+
+.read-container .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    background-color: rgb(91, 91, 91);
+    border-radius: 30px;
+    transition: .4s;
+}
+
+.slider::before {
+    position: absolute;
+    content: '';
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 8.5px;
+    background-color: rgb(91, 91, 91);
+    border-radius: 50%;
+}
+
+.read-container #read:checked + .slider {
+    background-color: aqua;
+    transform: translateX(24px);
+}
+
+#read:checked + .read-status::before {
+    content: 'Read';
+    font-size: 13px;
+}
+
+.read-status {
+    font-size: 17px;
+}
+
 .remove button, .read button {
     width: 40px;
     height: 40px;
