@@ -3,7 +3,6 @@ const addDialog = document.querySelector('.add-dialog');
 const showAddDialogBtn = document.querySelector('.show-add-dialog button')
 const closeAddDialogBtn = document.querySelector('.add-dialog button');
 const addBookForm = document.querySelector('.add-book-form');
-const removeBookBtns = [];
 
 const myLibrary = [];
 
@@ -25,95 +24,114 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 }
 
-function createBookCard(book) {
-    const cardArticle = document.createElement('article');
-    cardArticle.classList.add('card');
-    cardArticle.setAttribute('data-index', myLibrary.indexOf(book));
-
-    //create top with buttons
-    const bookButtonsDiv = document.createElement('div');
-    bookButtonsDiv.classList.add('book-buttons');
-
-    const readDiv = document.createElement('div');
-    readDiv.classList.add('read');
-
-    const removeDiv = document.createElement('div');
-    removeDiv.classList.add('remove');
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'X';
-    removeDiv.appendChild(removeBtn);
-
-    if (book.read) {
-        readDiv.textContent = '✓';
-    }
-    else {
-        readDiv.textContent = '!';
-    }
-
-    bookButtonsDiv.appendChild(readDiv);
-    bookButtonsDiv.appendChild(removeDiv);
-
-    //create book info section
-    const bookInfoDiv = document.createElement('div');
-    bookInfoDiv.classList.add('book-info');
-
-    const titleDiv = document.createElement('div');
-    titleDiv.classList.add('title');
-    titleDiv.textContent = book.title;
-
-    const authorDiv = document.createElement('div');
-    authorDiv.classList.add('author');
-    authorDiv.textContent = book.author;
-
-    const pagesDiv = document.createElement('div');
-    pagesDiv.classList.add('pages');
-    pagesDiv.textContent = book.pages.toString() + ' pp.';
-
-    bookInfoDiv.appendChild(titleDiv);
-    bookInfoDiv.appendChild(authorDiv);
-    bookInfoDiv.appendChild(pagesDiv);
-
-    //now append top and bottom to article
-    cardArticle.appendChild(bookButtonsDiv);
-    cardArticle.appendChild(bookInfoDiv);
-
-    //attach article to books section
-    booksSection.appendChild(cardArticle);
-}
-
 // function createBookCard(book) {
-//     let cardArticle = document.createElement('article');
+//     const cardArticle = document.createElement('article');
 //     cardArticle.classList.add('card');
 //     cardArticle.setAttribute('data-index', myLibrary.indexOf(book));
 
-    // let removeDiv = document.createElement('div');
-    // removeDiv.classList.add('remove');
-    // let removeBtn = document.createElement('button');
-    // removeBtn.textContent = 'X';
-    // removeBookBtns.push(removeBtn);
-    // removeDiv.appendChild(removeBtn);
+//     //create top with buttons
+//     const bookButtonsDiv = document.createElement('div');
+//     bookButtonsDiv.classList.add('book-buttons');
 
-//     //create top of book in article
-//     let bookInfoDiv = document.createElement('div');
+//     const readDiv = document.createElement('div');
+//     readDiv.classList.add('read');
+
+//     const removeDiv = document.createElement('div');
+//     removeDiv.classList.add('remove');
+//     const removeBtn = document.createElement('button');
+//     removeBtn.textContent = 'X';
+//     removeDiv.appendChild(removeBtn);
+
+//     if (book.read) {
+//         readDiv.textContent = '✓';
+//     }
+//     else {
+//         readDiv.textContent = '!';
+//     }
+
+//     bookButtonsDiv.appendChild(readDiv);
+//     bookButtonsDiv.appendChild(removeDiv);
+
+//     //create book info section
+//     const bookInfoDiv = document.createElement('div');
 //     bookInfoDiv.classList.add('book-info');
 
-//     bookInfoDiv.textContent = book.info();
+//     const titleDiv = document.createElement('div');
+//     titleDiv.classList.add('title');
+//     titleDiv.textContent = book.title;
 
-//     cardArticle.appendChild(removeDiv);
+//     const authorDiv = document.createElement('div');
+//     authorDiv.classList.add('author');
+//     authorDiv.textContent = book.author;
+
+//     const pagesDiv = document.createElement('div');
+//     pagesDiv.classList.add('pages');
+//     pagesDiv.textContent = book.pages.toString() + ' pp.';
+
+//     bookInfoDiv.appendChild(titleDiv);
+//     bookInfoDiv.appendChild(authorDiv);
+//     bookInfoDiv.appendChild(pagesDiv);
+
+//     //now append top and bottom to article
+//     cardArticle.appendChild(bookButtonsDiv);
 //     cardArticle.appendChild(bookInfoDiv);
+
+//     //attach article to books section
 //     booksSection.appendChild(cardArticle);
 // }
 
+function createBookCard(book) {
+    let cardArticle = document.createElement('article');
+    cardArticle.classList.add('card');
+    cardArticle.setAttribute('data-index', myLibrary.indexOf(book));
+
+    let buttonContainerDiv = document.createElement('div');
+    buttonContainerDiv.classList.add('buttons');
+
+    let readDiv = document.createElement('div');
+    readDiv.classList.add('read-container');
+    let readLabel = document.createElement('label');
+    let readInput = document.createElement('input');
+    readInput.type = 'checkbox';
+    readInput.id = 'read';
+    readInput.name = 'read';
+    let readSpan = document.createElement('span');
+    readSpan.classList.add('slider');
+
+    readLabel.appendChild(readInput);
+    readLabel.appendChild(readSpan);
+    readDiv.appendChild(readLabel);
+
+    let removeDiv = document.createElement('div');
+    removeDiv.classList.add('remove');
+    let removeBtn = document.createElement('button');
+    removeBtn.textContent = 'X';
+    removeDiv.appendChild(removeBtn);
+
+    buttonContainerDiv.appendChild(readDiv);
+    buttonContainerDiv.appendChild(removeDiv);
+
+    //create top of book in article
+    let bookInfoDiv = document.createElement('div');
+    bookInfoDiv.classList.add('book-info');
+
+    bookInfoDiv.textContent = book.info();
+
+    cardArticle.appendChild(buttonContainerDiv);
+    cardArticle.appendChild(bookInfoDiv);
+    booksSection.appendChild(cardArticle);
+}
+
 function populateBookCards() {
-    addBookToLibrary("The 0", "J.R.R. Tolkien", 295, true, myLibrary.length);
-    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, true, myLibrary.length);
-    addBookToLibrary("The 2", "J.R.R. Tolkien", 295, true, myLibrary.length);
+    addBookToLibrary("The 0", "J.R.R. Tolkien", 295, true);
+    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, true);
+    addBookToLibrary("The 2", "J.R.R. Tolkien", 295, true);
 
     for (let book of myLibrary) {
         createBookCard(book);
     }
 
-    console.log(myLibrary[3]);
+    console.log(myLibrary[2]);
 }
 
 showAddDialogBtn.addEventListener('click', () => {
@@ -138,7 +156,7 @@ addBookForm.addEventListener('submit', (e) => {
         readValue = false;
     }
 
-    addBookToLibrary(titleValue, authorValue, pagesValue, readValue, myLibrary.length);
+    addBookToLibrary(titleValue, authorValue, pagesValue, readValue);
     createBookCard(myLibrary[myLibrary.length - 1]);
 
     addBookForm.reset();
@@ -156,7 +174,6 @@ booksSection.addEventListener('click', (e) => {
     }
 
     const bookChild = e.target.parentNode.parentNode.parentNode;
-
     removeBook(bookChild);
 });
 

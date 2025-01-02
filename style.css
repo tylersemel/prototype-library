@@ -103,8 +103,9 @@ h1, h2, h3, h4, h5, h6 {
     appearance: none;
     width: 50px;
     height: 20px;
-    background-color: gray;
+    background-color: rgb(177, 177, 177);
     border-radius: 30px;
+    transition: .4s;
 }
 
 .read-container {
@@ -120,7 +121,6 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     top: 0;
     left: 0;
-    background-color: rgb(91, 91, 91);
     border-radius: 30px;
     transition: .4s;
 }
@@ -137,8 +137,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .read-container #read:checked + .slider {
-    background-color: aqua;
     transform: translateX(24px);
+}
+
+.read-container #read:checked {
+    background-color: rgb(52, 255, 119);
+}
+
+.read-container #read:checked + .slider::before {
+    background-color: rgb(0, 93, 31);
 }
 
 #read:checked + .read-status::before {
@@ -167,7 +174,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-.book-buttons {
+.buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
