@@ -98,6 +98,13 @@ function createBookCard(book) {
     let readSpan = document.createElement('span');
     readSpan.classList.add('slider');
 
+    if (book.read) {
+        readInput.checked = true;
+    }
+    else {
+        readInput.checked = false;
+    }
+
     readLabel.appendChild(readInput);
     readLabel.appendChild(readSpan);
     readDiv.appendChild(readLabel);
@@ -111,7 +118,6 @@ function createBookCard(book) {
     buttonContainerDiv.appendChild(readDiv);
     buttonContainerDiv.appendChild(removeDiv);
 
-    //create top of book in article
     let bookInfoDiv = document.createElement('div');
     bookInfoDiv.classList.add('book-info');
 
@@ -124,14 +130,13 @@ function createBookCard(book) {
 
 function populateBookCards() {
     addBookToLibrary("The 0", "J.R.R. Tolkien", 295, true);
-    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, true);
+    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, false);
     addBookToLibrary("The 2", "J.R.R. Tolkien", 295, true);
+    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, false);
 
     for (let book of myLibrary) {
         createBookCard(book);
     }
-
-    console.log(myLibrary[2]);
 }
 
 showAddDialogBtn.addEventListener('click', () => {
@@ -148,15 +153,14 @@ addBookForm.addEventListener('submit', (e) => {
     const titleValue = addBookForm.querySelector('#title').value;
     const authorValue =addBookForm.querySelector('#author').value;
     const pagesValue =addBookForm.querySelector('#pages').value;
-    let readValue;
+    
     if (addBookForm.querySelector('#has-read').value) {
-        readValue = true;
+        addBookToLibrary(titleValue, authorValue, pagesValue, true);
     }
     else {
-        readValue = false;
+        addBookToLibrary(titleValue, authorValue, pagesValue, false);
     }
 
-    addBookToLibrary(titleValue, authorValue, pagesValue, readValue);
     createBookCard(myLibrary[myLibrary.length - 1]);
 
     addBookForm.reset();
@@ -164,20 +168,29 @@ addBookForm.addEventListener('submit', (e) => {
 });
 
 booksSection.addEventListener('click', (e) => {
-    if (e.target.parentNode.classList.value !== 'remove') {
-        return;
-    }
+    if (e.target.parentNode.classList.value === 'remove') {
+        //there's probably a function that can grab an ancestor parentNode better
+        if (e.target.parentNode.parentNode.parentNode.classList.value !== 'card') {
+            return;
+        }
 
-    //there's probably a function that can grab an ancestor parentNode better
-    if (e.target.parentNode.parentNode.parentNode.classList.value !== 'card') {
-        return;
+        const bookChild = e.target.parentNode.parentNode.parentNode;
+        removeBook(bookChild);
     }
-
-    const bookChild = e.target.parentNode.parentNode.parentNode;
-    removeBook(bookChild);
+    else if (e.target.type === 'checkbox') {
+        const bookChild = e.target.parentNode.parentNode.parentNode.parentNode;
+        setReadStatus(bookChild)
+    }
 });
 
+function setReadStatus(bookChild) {
+    myLibrary[bookChild.getAttribute('data-index')].read = !myLibrary[bookChild.getAttribute('data-index')].read;
+    updateBookCard(bookChild);
+}
 
+function updateBookCard(bookChild) {
+    bookChild.lastChild.textContent = myLibrary[bookChild.getAttribute('data-index')].info();
+}
 
 function removeBook(bookChild) {
     //remove from the library array
@@ -192,6 +205,6 @@ function removeBook(bookChild) {
         child.setAttribute('data-index', idx)
         idx++;
     }
-
 }
+
 populateBookCards();
