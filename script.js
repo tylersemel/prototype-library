@@ -12,11 +12,13 @@ function Book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
     this.info = function() {
-        if (!this.read) {
-            return `${title} by ${author}, ${pages} pages, not read yet.`;
-        }
-        return `${title} by ${author}, ${pages} pages, has been read.`
+        return this.read ? `${title} by ${author}, ${pages} pages, has been read.` : 
+            `${title} by ${author}, ${pages} pages, not read yet.`;
     };
+}
+
+Book.prototype.changeReadStatus = function () {
+    this.read = !this.read;
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -98,12 +100,8 @@ function createBookCard(book) {
     let readSpan = document.createElement('span');
     readSpan.classList.add('slider');
 
-    if (book.read) {
-        readInput.checked = true;
-    }
-    else {
-        readInput.checked = false;
-    }
+    readInput.checked = book.read;
+    readInput.addEventListener('change', handleReadStatus);
 
     readLabel.appendChild(readInput);
     readLabel.appendChild(readSpan);
@@ -113,6 +111,7 @@ function createBookCard(book) {
     removeDiv.classList.add('remove');
     let removeBtn = document.createElement('button');
     removeBtn.textContent = 'X';
+    removeBtn.addEventListener('click', handleRemoveBook);
     removeDiv.appendChild(removeBtn);
 
     buttonContainerDiv.appendChild(readDiv);
@@ -167,37 +166,27 @@ addBookForm.addEventListener('submit', (e) => {
     addDialog.close();
 });
 
-booksSection.addEventListener('click', (e) => {
-    if (e.target.parentNode.classList.value === 'remove') {
-        //there's probably a function that can grab an ancestor parentNode better
-        if (e.target.parentNode.parentNode.parentNode.classList.value !== 'card') {
-            return;
-        }
+function handleReadStatus(event) {
+    console.log(event.target.closest('.card'));
 
-        const bookChild = e.target.parentNode.parentNode.parentNode;
-        removeBook(bookChild);
-    }
-    else if (e.target.type === 'checkbox') {
-        const bookChild = e.target.parentNode.parentNode.parentNode.parentNode;
-        setReadStatus(bookChild)
-    }
-});
+    const book = event.target.closest('.card');
+    myLibrary.at(book.getAttribute('data-index')).changeReadStatus();
 
-function setReadStatus(bookChild) {
-    myLibrary[bookChild.getAttribute('data-index')].read = !myLibrary[bookChild.getAttribute('data-index')].read;
-    updateBookCard(bookChild);
+    updateBookCard(book);
 }
 
-function updateBookCard(bookChild) {
-    bookChild.lastChild.textContent = myLibrary[bookChild.getAttribute('data-index')].info();
+function updateBookCard(book) {
+    book.lastChild.textContent = myLibrary[book.getAttribute('data-index')].info();
 }
 
-function removeBook(bookChild) {
+function handleRemoveBook(event) {
+    const book = event.target.closest('.card');
+
     //remove from the library array
-    myLibrary.splice(bookChild.getAttribute('data-index'), 1);
+    myLibrary.splice(book.getAttribute('data-index'), 1);
 
     //remove from the DOM
-    booksSection.removeChild(bookChild);   
+    booksSection.removeChild(book);   
 
     //reset data-index to match index of myLibrary
     let idx = 0;
