@@ -21,9 +21,12 @@ Book.prototype.changeReadStatus = function () {
     this.read = !this.read;
 }
 
-function addBookToLibrary(title, author, pages, read) {
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
+function addBookToLibrary(book) {
+    if (!(book instanceof Book)) {
+        return;
+    }
+    
+    myLibrary.push(book);
 }
 
 function createBookCard(book) {
@@ -72,10 +75,10 @@ function createBookCard(book) {
 }
 
 function populateBookCards() {
-    addBookToLibrary("The 0", "J.R.R. Tolkien", 295, true);
-    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, false);
-    addBookToLibrary("The 2", "J.R.R. Tolkien", 295, true);
-    addBookToLibrary("The 1", "J.R.R. Tolkien", 295, false);
+    addBookToLibrary(new Book("The 0", "J.R.R. Tolkien", 295, true));
+    addBookToLibrary(new Book("The 1", "J.R.R. Tolkien", 295, true));
+    addBookToLibrary(new Book("The 2", "J.R.R. Tolkien", 295, false));
+    addBookToLibrary(new Book("The 3", "J.R.R. Tolkien", 295, true));
 
     myLibrary.forEach((book) => {
         createBookCard(book);
@@ -93,26 +96,21 @@ closeAddDialogBtn.addEventListener('click', () => {
 addBookForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const titleValue = addBookForm.querySelector('#title').value;
-    const authorValue =addBookForm.querySelector('#author').value;
-    const pagesValue =addBookForm.querySelector('#pages').value;
-    
-    if (addBookForm.querySelector('#has-read').value) {
-        addBookToLibrary(titleValue, authorValue, pagesValue, true);
-    }
-    else {
-        addBookToLibrary(titleValue, authorValue, pagesValue, false);
-    }
+    const formData = new FormData(addBookForm);
 
-    createBookCard(myLibrary[myLibrary.length - 1]);
+    const book = new Book(  formData.get('title'), 
+                            formData.get('author'),
+                            formData.get('pages'),
+                            formData.get('read') === true);
+    
+    addBookToLibrary(book);
+    createBookCard(book);
 
     addBookForm.reset();
     addDialog.close();
 });
 
 function handleReadStatus(event) {
-    console.log(event.target.closest('.card'));
-
     const book = event.target.closest('.card');
     myLibrary.at(book.getAttribute('data-index')).changeReadStatus();
 
