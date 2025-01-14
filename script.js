@@ -6,15 +6,18 @@ const addBookForm = document.querySelector('.add-book-form');
 
 const myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function() {
-        return this.read ? `${title} by ${author}, ${pages} pages, has been read.` : 
-            `${title} by ${author}, ${pages} pages, not read yet.`;
-    };
+class Book {
+    constructor(title, author, pages, read) {       
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    info = () => {
+        return this.read ? `${this.title} by ${this.author}, ${this.pages} pages, has been read.` : 
+            `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
+    }
 }
 
 Book.prototype.changeReadStatus = function () {
@@ -81,6 +84,7 @@ function populateBookCards() {
     addBookToLibrary(new Book("The 3", "J.R.R. Tolkien", 295, true));
 
     myLibrary.forEach((book) => {
+        console.log(book);
         createBookCard(book);
     });
 }
