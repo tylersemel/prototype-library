@@ -97,21 +97,118 @@ closeAddDialogBtn.addEventListener('click', () => {
     addDialog.close();
 });
 
+
+const title = addBookForm.querySelector('#title');
+const author = addBookForm.querySelector('#author');
+const pages = addBookForm.querySelector('#pages');
+const radios = addBookForm.querySelectorAll('input[type=radio]');
+const titleError = addBookForm.querySelector('.title-error');
+const authorError = addBookForm.querySelector('.author-error');
+const pagesError = addBookForm.querySelector('.pages-error');
+const readError = addBookForm.querySelector('.read-error');
+
+
+
+title.addEventListener("input", () => {
+    if (title.validity.valid) {
+        titleError.textContent = "";
+        titleError.className = "title-error error";
+    }
+    else {
+        showTitleError();
+    }
+});
+
+author.addEventListener("input", () => {
+    if (author.validity.valid) {
+        authorError.textContent = "";
+        authorError.className = "author-error error";
+    }
+    else {
+        showAuthorError();
+    }
+});
+
+pages.addEventListener("input", () => {
+    if (pages.validity.valid) {
+        pagesError.textContent = "";
+        pagesError.className = "pages-error error";
+    }
+    else {
+        showPagesError();
+    }
+});
+
+radios[0].addEventListener("change", () => {
+    readError.className = "read-error error";
+});
+
+radios[1].addEventListener("change", () => {
+    readError.className = "read-error error";
+});
+
+function showTitleError() {
+    if (title.validity.valueMissing) {
+        titleError.textContent = "You need to enter a title.";
+    } else if (title.validity.tooLong) {
+        titleError.textContent = "Enter a title shorter than 100 characters.";
+    }
+
+    titleError.className = `title-error error active`;
+}
+
+function showAuthorError() {
+    if (author.validity.valueMissing) {
+        authorError.textContent = "You need to enter an author.";
+    }
+
+    authorError.className = `author-error error active`;
+}
+
+function showPagesError() {
+    if (pages.validity.valueMissing) {
+        pagesError.textContent = "You need to enter a page count.";
+    } else if (pages.validity.tooShort) {
+        pagesError.textContent = "There must be at least 1 page."
+    } 
+
+    pagesError.className = `pages-error error active`;
+}
+
+function showReadError () {
+    if (radios[0].validity.valueMissing && radios[1].validity.valueMissing) {
+        readError.textContent = "You need to select one option.";
+    } 
+
+    readError.className = `read-error error active`;
+}
+
 addBookForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!title.validity.valid) {
+        showTitleError();
+    }
+    else if (!author.validity.valid) {
+        showAuthorError();
+    }
+    else if (!pages.validity.valid) {
+        showPagesError();
+    }
+    else if (!radios[0].validity.valid && !radios[1].validity.valid) {
+        showReadError();
+    }
+    else {
+        const book = new Book(  title.value, 
+                                author.value,
+                                pages.value,
+                                radios[0].value == true);
+        
+        addBookToLibrary(book);
+        createBookCard(book);
 
-    const formData = new FormData(addBookForm);
-
-    const book = new Book(  formData.get('title'), 
-                            formData.get('author'),
-                            formData.get('pages'),
-                            formData.get('read') === true);
-    
-    addBookToLibrary(book);
-    createBookCard(book);
-
-    addBookForm.reset();
-    addDialog.close();
+        addBookForm.reset();
+        addDialog.close();
+    }
 });
 
 function handleReadStatus(event) {
